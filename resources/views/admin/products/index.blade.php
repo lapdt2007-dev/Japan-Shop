@@ -13,12 +13,14 @@
         <h3 class="fw-bold mb-0 text-primary">📦 Quản Lý Sản Phẩm & Tồn Kho</h3>
         <div>
             <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary me-2">Đơn hàng</a>
+            <a href="{{ route('admin.feedback.index') }}" class="btn btn-outline-secondary me-2">Phản hồi</a>
             <a href="{{ route('admin.products.create') }}" class="btn btn-success fw-bold">
                 <i class="fa-solid fa-plus me-1"></i> Thêm Sản Phẩm Mới
             </a>
         </div>
     </div>
 
+    @include('partials.flash-errors')
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}

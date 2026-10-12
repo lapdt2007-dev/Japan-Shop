@@ -13,8 +13,10 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold text-dark mb-0"><i class="fa-solid fa-boxes-packing text-primary me-2"></i>Quản Lý Đơn Hàng</h3>
         <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-house me-1"></i> Xem Website</a>
+        <a href="{{ route('admin.feedback.index') }}" class="btn btn-outline-primary btn-sm me-1"><i class="fa-solid fa-comments me-1"></i> Phản hồi</a>
     </div>
 
+    @include('partials.flash-errors')
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}

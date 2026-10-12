@@ -90,6 +90,14 @@
 
         <h4 class="fw-bold mb-3"><i class="fa-solid fa-bag-shopping text-danger me-2"></i>Mua Hàng Của Tôi</h4>
 
+        @include('partials.flash-errors')
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
         @php
             $tabs = [
                 'all' => 'Tất cả',
@@ -134,8 +142,7 @@
                     <select name="payment_method" class="form-select form-select-sm">
                         <option value="all">Tất cả</option>
                         <option value="cod" {{ request('payment_method') === 'cod' ? 'selected' : '' }}>Thanh toán khi nhận hàng (COD)</option>
-                        <option value="bank_transfer" {{ request('payment_method') === 'bank_transfer' ? 'selected' : '' }}>Chuyển khoản ngân hàng</option>
-                        <option value="momo" {{ request('payment_method') === 'momo' ? 'selected' : '' }}>Ví MoMo</option>
+                        <option value="bank" {{ request('payment_method') === 'bank' ? 'selected' : '' }}>Chuyển khoản ngân hàng</option>
                     </select>
                 </div>
 
@@ -249,7 +256,18 @@
                         </table>
                     </div>
 
-                    <div class="d-flex justify-content-end px-3 py-2 border-bottom">
+                    <div class="d-flex justify-content-end align-items-center px-3 py-2 border-bottom">
+                        @if($order->order_status === 'pending' && $order->payment_status === 'unpaid')
+                            <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="me-auto"
+                                  onsubmit="return confirm('Bạn chắc chắn muốn hủy đơn hàng này?');">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fa-solid fa-xmark me-1"></i>Hủy đơn
+                                </button>
+                            </form>
+                        @endif
+
                         <span class="text-muted small me-2">Tổng thanh toán đơn hàng:</span>
                         <strong class="text-danger">{{ number_format($order->total_amount ?? 0, 0, ',', '.') }}đ</strong>
                     </div>

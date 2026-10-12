@@ -10,6 +10,7 @@
 <div class="container bg-white p-4 rounded-3 shadow-sm" style="max-width: 700px;">
     <h3 class="fw-bold text-success mb-4">➕ Thêm Sản Phẩm Mới</h3>
 
+    @include('partials.flash-errors')
     <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -69,6 +70,12 @@
             <label class="form-label fw-semibold">Ảnh đại diện (Thumbnail)</label>
             <input type="file" name="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror" accept="image/*">
             @error('thumbnail') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+
+                <!-- Ảnh phụ -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Ảnh phụ (tối đa 8 ảnh, có thể chọn nhiều ảnh cùng lúc)</label>
+            <input type="file" name="images[]" class="form-control" accept="image/*" multiple>
         </div>
 
         <!-- Mô tả -->
